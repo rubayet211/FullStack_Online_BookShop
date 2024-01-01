@@ -1,6 +1,6 @@
 package dev.repository;
 
-import dev.domain.Customer;
+import dev.domain.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -8,58 +8,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public class CustomerRepository {
+public class UserRepository {
 
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public CustomerRepository(SessionFactory sessionFactory) {
+    public UserRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public void createCustomer(Customer customer) {
+    public void createCustomer(User user) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(customer);
+        session.save(user);
     }
 
-    public void updateCustomer(int id, Customer updatedCustomer) {
+    public void updateCustomer(int id, User updatedUser) {
         Session session = sessionFactory.getCurrentSession();
         // Retrieve the existing customer
-        Customer existingCustomer = session.get(Customer.class, id);
+        User existingUser = session.get(User.class, id);
 
         // Update the existing customer with the new details
-        if (existingCustomer != null) {
-            existingCustomer.setEmail(updatedCustomer.getEmail());
-            existingCustomer.setPassword(updatedCustomer.getPassword());
+        if (existingUser != null) {
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setPassword(updatedUser.getPassword());
             // Update other fields as needed
 
             // Save the updated customer
-            session.update(existingCustomer);
+            session.update(existingUser);
         }
     }
 
-    public List<Customer> findAll() {
+    public List<User> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Customer", Customer.class).list();
+        return session.createQuery("from User", User.class).list();
     }
 
-    public Customer findById(int id) {
+    public User findById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Customer.class, id);
+        return session.get(User.class, id);
     }
 
     public void deleteById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Customer customer = findById(id);
-        session.delete(customer);
+        User user = findById(id);
+        session.delete(user);
     }
 
-    public Customer findByEmail(String email) {
+    public User findByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Customer> query = session.createQuery("from Customer where email = :email", Customer.class);
+        Query<User> query = session.createQuery("from User where email = :email", User.class);
         query.setParameter("email", email);
         return query.uniqueResult();
     }

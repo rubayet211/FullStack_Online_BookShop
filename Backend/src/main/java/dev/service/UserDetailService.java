@@ -1,7 +1,7 @@
 package dev.service;
 
-import dev.domain.CustomerDetail;
-import dev.repository.CustomerDetailRepository;
+import dev.domain.UserDetail;
+import dev.repository.UserDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,34 +11,34 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CustomerDetailService {
+public class UserDetailService {
 
-    private final CustomerDetailRepository customerDetailRepository;
+    private final UserDetailRepository customerDetailRepository;
 
     @Autowired
-    public CustomerDetailService(CustomerDetailRepository customerDetailRepository) {
+    public UserDetailService(UserDetailRepository customerDetailRepository) {
         this.customerDetailRepository = customerDetailRepository;
     }
 
-    public void createCustomerDetail(CustomerDetail customerDetail) throws SQLException {
+    public void createCustomerDetail(UserDetail userDetail) throws SQLException {
         try {
-            customerDetailRepository.createCustomerDetail(customerDetail);
+            customerDetailRepository.createCustomerDetail(userDetail);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error creating customer detail", ex);
+            throw new SQLException("Error creating user detail", ex);
         }
     }
 
-    public List<CustomerDetail> getAllCustomerDetails() throws SQLException {
+    public List<UserDetail> getAllCustomerDetails() throws SQLException {
         try {
             return customerDetailRepository.findAll();
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error retrieving all customer details", ex);
+            throw new SQLException("Error retrieving all user details", ex);
         }
     }
 
-    public CustomerDetail getCustomerDetailById(int id) throws SQLException {
+    public UserDetail getCustomerDetailById(int id) throws SQLException {
         try {
             return customerDetailRepository.findById(id);
         } catch (Exception ex) {
@@ -47,12 +47,12 @@ public class CustomerDetailService {
         }
     }
 
-    public void updateCustomerDetail(CustomerDetail customerDetail) throws SQLException {
+    public void updateCustomerDetail(UserDetail userDetail) throws SQLException {
         try {
-            customerDetailRepository.updateCustomerDetail(customerDetail);
+            customerDetailRepository.updateCustomerDetail(userDetail);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error updating customer detail", ex);
+            throw new SQLException("Error updating user detail", ex);
         }
     }
 
@@ -61,7 +61,7 @@ public class CustomerDetailService {
             customerDetailRepository.deleteById(id);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error deleting customer detail by ID", ex);
+            throw new SQLException("Error deleting user detail by ID", ex);
         }
     }
 }

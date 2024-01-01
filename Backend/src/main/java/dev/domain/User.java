@@ -6,8 +6,8 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-@Table(name = "customer")
-public class Customer {
+@Table(name = "user")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,30 +24,30 @@ public class Customer {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Order> orders;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private CustomerDetail customerDetail;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private UserDetail userDetail;
 
     @ManyToMany
     @JoinTable(
-            name = "customer_role",
-            joinColumns = @JoinColumn(name = "customer_id"),
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
 
 
-    public Customer() {
+    public User() {
     }
 
-    public Customer(int id, String email, String password, List<Order> orders, CustomerDetail customerDetail, List<Role> roles) {
+    public User(int id, String email, String password, List<Order> orders, UserDetail userDetail, List<Role> roles) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.orders = orders;
-        this.customerDetail = customerDetail;
+        this.userDetail = userDetail;
         this.roles = roles;
     }
 
@@ -83,12 +83,12 @@ public class Customer {
         this.orders = orders;
     }
 
-    public CustomerDetail getCustomerDetail() {
-        return customerDetail;
+    public UserDetail getCustomerDetail() {
+        return userDetail;
     }
 
-    public void setCustomerDetail(CustomerDetail customerDetail) {
-        this.customerDetail = customerDetail;
+    public void setCustomerDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
     }
 
     public List<Role> getRoles() {
@@ -101,12 +101,12 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
+        return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", orders=" + orders +
-                ", customerDetail=" + customerDetail +
+                ", userDetail=" + userDetail +
                 ", roles=" + roles +
                 '}';
     }

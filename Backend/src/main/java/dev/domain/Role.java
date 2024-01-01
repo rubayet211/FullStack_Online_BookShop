@@ -17,12 +17,12 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private List<Customer> customers;
+    private List<User> users;
 
-    public Role(int id, String name, List<Customer> customers) {
+    public Role(int id, String name, List<User> users) {
         this.id = id;
         this.name = name;
-        this.customers = customers;
+        this.users = users;
     }
 
     public Role() {
@@ -44,11 +44,11 @@ public class Role {
         this.name = name;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public List<User> getCustomers() {
+        return users;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public void setCustomers(List<User> users) {
+        this.users = users;
     }
 }

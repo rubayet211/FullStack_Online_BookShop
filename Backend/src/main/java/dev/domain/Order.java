@@ -1,10 +1,6 @@
 package dev.domain;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -18,14 +14,14 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private User user;
 
     @Column(name = "address")
     private String address;
 
     @ManyToOne
     @JoinColumn(name = "customer_detail_id")
-    private CustomerDetail customerDetail;
+    private UserDetail userDetail;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -38,11 +34,11 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, Customer customer, String address, CustomerDetail customerDetail, List<Book> books) {
+    public Order(int id, User user, String address, UserDetail userDetail, List<Book> books) {
         this.id = id;
-        this.customer = customer;
+        this.user = user;
         this.address = address;
-        this.customerDetail = customerDetail;
+        this.userDetail = userDetail;
         this.books = books;
     }
 
@@ -54,12 +50,12 @@ public class Order {
         this.id = id;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getCustomer() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomer(User user) {
+        this.user = user;
     }
 
     public String getAddress() {
@@ -70,12 +66,12 @@ public class Order {
         this.address = address;
     }
 
-    public CustomerDetail getCustomerDetail() {
-        return customerDetail;
+    public UserDetail getCustomerDetail() {
+        return userDetail;
     }
 
-    public void setCustomerDetail(CustomerDetail customerDetail) {
-        this.customerDetail = customerDetail;
+    public void setCustomerDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
     }
 
     public List<Book> getBooks() {
@@ -90,9 +86,9 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", customer=" + customer +
+                ", customer=" + user +
                 ", address='" + address + '\'' +
-                ", customerDetail=" + customerDetail +
+                ", userDetail=" + userDetail +
                 ", books=" + books +
                 '}';
     }

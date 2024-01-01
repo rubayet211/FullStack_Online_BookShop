@@ -1,7 +1,7 @@
 package dev.service;
 
-import dev.domain.Customer;
-import dev.repository.CustomerRepository;
+import dev.domain.User;
+import dev.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,49 +11,49 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CustomerService {
+public class UserService {
 
-    private final CustomerRepository customerRepository;
+    private final UserRepository customerRepository;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
+    public UserService(UserRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
-    public void createCustomer(Customer customer) throws SQLException {
+    public void createCustomer(User user) throws SQLException {
         try {
-            customerRepository.createCustomer(customer);
+            customerRepository.createCustomer(user);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error creating customer", ex);
+            throw new SQLException("Error creating user", ex);
         }
     }
 
-    public void updateCustomer(int id, Customer updatedCustomer) throws SQLException {
+    public void updateCustomer(int id, User updatedUser) throws SQLException {
         try {
             // Perform validation or additional logic if needed
-            customerRepository.updateCustomer(id, updatedCustomer);
+            customerRepository.updateCustomer(id, updatedUser);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error updating customer", ex);
+            throw new SQLException("Error updating user", ex);
         }
     }
 
-    public List<Customer> getAllCustomers() throws SQLException {
+    public List<User> getAllCustomers() throws SQLException {
         try {
             return customerRepository.findAll();
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error retrieving all customers", ex);
+            throw new SQLException("Error retrieving all users", ex);
         }
     }
 
-    public Customer getCustomerById(int id) throws SQLException {
+    public User getCustomerById(int id) throws SQLException {
         try {
             return customerRepository.findById(id);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error retrieving customer by ID", ex);
+            throw new SQLException("Error retrieving user by ID", ex);
         }
     }
 
@@ -62,14 +62,14 @@ public class CustomerService {
             customerRepository.deleteById(id);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error deleting customer", ex);
+            throw new SQLException("Error deleting user", ex);
         }
     }
 
     public boolean signIn(String email, String password) throws SQLException {
         try {
-            Customer customer = customerRepository.findByEmail(email);
-            return customer != null && customer.getPassword().equals(password);
+            User user = customerRepository.findByEmail(email);
+            return user != null && user.getPassword().equals(password);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
             throw new SQLException("Error signing in", ex);

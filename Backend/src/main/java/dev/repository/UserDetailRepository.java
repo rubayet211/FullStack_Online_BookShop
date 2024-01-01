@@ -1,48 +1,47 @@
 package dev.repository;
 
-import dev.domain.CustomerDetail;
+import dev.domain.UserDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public class CustomerDetailRepository {
+public class UserDetailRepository {
 
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public CustomerDetailRepository(SessionFactory sessionFactory) {
+    public UserDetailRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public void createCustomerDetail(CustomerDetail customerDetail) {
+    public void createCustomerDetail(UserDetail userDetail) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(customerDetail);
+        session.save(userDetail);
     }
 
-    public List<CustomerDetail> findAll() {
+    public List<UserDetail> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from CustomerDetail", CustomerDetail.class).list();
+        return session.createQuery("from UserDetail", UserDetail.class).list();
     }
 
-    public CustomerDetail findById(int id) {
+    public UserDetail findById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(CustomerDetail.class, id);
+        return session.get(UserDetail.class, id);
     }
 
-    public void updateCustomerDetail(CustomerDetail customerDetail) {
+    public void updateCustomerDetail(UserDetail userDetail) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(customerDetail);
+        session.update(userDetail);
     }
 
     public void deleteById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        CustomerDetail customerDetail = findById(id);
-        session.delete(customerDetail);
+        UserDetail userDetail = findById(id);
+        session.delete(userDetail);
 
     }
 }

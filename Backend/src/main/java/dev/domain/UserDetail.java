@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "customer_detail")
-public class CustomerDetail {
+@Table(name = "user_detail")
+public class UserDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,23 +36,23 @@ public class CustomerDetail {
     private String gender;
 
     @OneToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     // Updated relationship to Order
-    @OneToMany(mappedBy = "customerDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders;
 
-    public CustomerDetail() {
+    public UserDetail() {
     }
 
-    public CustomerDetail(int id, String name, String phone, LocalDate dob, String gender, Customer customer, List<Order> orders) {
+    public UserDetail(int id, String name, String phone, LocalDate dob, String gender, User user, List<Order> orders) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.dob = dob;
         this.gender = gender;
-        this.customer = customer;
+        this.user = user;
         this.orders = orders;
     }
 
@@ -96,12 +96,12 @@ public class CustomerDetail {
         this.gender = gender;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public User getCustomer() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomer(User user) {
+        this.user = user;
     }
 
     public List<Order> getOrders() {
@@ -114,13 +114,13 @@ public class CustomerDetail {
 
     @Override
     public String toString() {
-        return "CustomerDetail{" +
+        return "UserDetail{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", dob=" + dob +
                 ", gender='" + gender + '\'' +
-                ", customer=" + customer +
+                ", customer=" + user +
                 ", orders=" + orders +
                 '}';
     }
