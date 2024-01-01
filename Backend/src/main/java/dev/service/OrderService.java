@@ -34,7 +34,7 @@ public class OrderService {
     }
 
     public Order getOrderById(int id) {
-        return orderRepository.findById(id).orElse(null);
+        return orderRepository.findById(id);
     }
 
     public void deleteOrder(int id) {
