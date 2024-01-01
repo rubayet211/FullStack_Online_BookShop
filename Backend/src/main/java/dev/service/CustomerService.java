@@ -23,20 +23,28 @@ public class CustomerService {
         customerRepository.createCustomer(customer);
     }
 
-    public void updateCustomer(Customer customer){
-
-        customerRepository.updateCustomer(customer);
+    public void updateCustomer(int id, Customer updatedCustomer) {
+        // Perform validation or additional logic if needed
+        customerRepository.updateCustomer(id, updatedCustomer);
     }
 
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
-    public Customer getCustomerById(Long id) {
+    public Customer getCustomerById(int id) {
         return customerRepository.findById(id);
     }
 
-    public void deleteCustomer(Long id) {
+    public void deleteCustomer(int id) {
         customerRepository.deleteById(id);
+    }
+
+    public boolean signIn(String email, String password) {
+
+        Customer customer = customerRepository.findByEmail(email);
+
+
+        return customer != null && customer.getPassword().equals(password);
     }
 }

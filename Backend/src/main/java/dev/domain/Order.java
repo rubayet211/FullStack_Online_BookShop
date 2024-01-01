@@ -23,6 +23,10 @@ public class Order {
     @Column(name = "address")
     private String address;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_detail_id")
+    private CustomerDetail customerDetail;
+
     @ManyToMany
     @JoinTable(
             name = "order_books",
