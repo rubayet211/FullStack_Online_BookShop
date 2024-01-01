@@ -14,7 +14,7 @@ public class CustomerDetailRepository {
 
     private final SessionFactory sessionFactory;
 
-
+    @Autowired
     public CustomerDetailRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

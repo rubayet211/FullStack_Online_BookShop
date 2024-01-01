@@ -40,7 +40,7 @@ public class CustomerDetail {
     private Customer customer;
 
     // Updated relationship to Order
-    @OneToMany(mappedBy = "customerDetail", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders;
 
     public CustomerDetail() {
