@@ -21,7 +21,6 @@ public class UserDetail {
     private String name;
 
     @NotBlank(message = "Phone is required")
-    @Min(10)
     @Column(name = "phone")
     private String phone;
 

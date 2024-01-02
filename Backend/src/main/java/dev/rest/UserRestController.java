@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserRestController {
 
     private UserService userService;
@@ -49,6 +50,5 @@ public class UserRestController {
     public ResponseEntity<User> signUser(@RequestBody User user) {
         User signedInUser = userService.signIn(user);
         return ResponseEntity.ok(signedInUser);
-
     }
 }
