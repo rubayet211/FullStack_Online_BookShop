@@ -1,10 +1,9 @@
 package dev.domain;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class UserDetail {
     private String name;
 
     @NotBlank(message = "Phone is required")
-    @Pattern(regexp = "^\\d{10}$", message = "Invalid phone number format")
+    @Min(10)
     @Column(name = "phone")
     private String phone;
 
@@ -31,22 +30,21 @@ public class UserDetail {
     @Column(name = "dob")
     private LocalDate dob;
 
-    @NotBlank(message = "Gender is required")
+    @NotNull
     @Column(name = "gender")
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Updated relationship to Order
-    @OneToMany(mappedBy = "userDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userDetail", fetch = FetchType.EAGER)
     private List<Order> orders;
-
     public UserDetail() {
     }
 
-    public UserDetail(int id, String name, String phone, LocalDate dob, String gender, User user, List<Order> orders) {
+    public UserDetail(int id, String name, String phone, LocalDate dob, Gender gender, User user, List<Order> orders) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -88,28 +86,20 @@ public class UserDetail {
         this.dob = dob;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
-    public User getCustomer() {
+    public User getUser() {
         return user;
     }
 
-    public void setCustomer(User user) {
+    public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 
     @Override
@@ -119,9 +109,7 @@ public class UserDetail {
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", dob=" + dob +
-                ", gender='" + gender + '\'' +
-                ", customer=" + user +
-                ", orders=" + orders +
+                ", gender=" + gender +
                 '}';
     }
 }

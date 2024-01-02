@@ -21,8 +21,8 @@
     -->
 
     <b:bean id="dataSource" class="com.mysql.cj.jdbc.MysqlDataSource">
-        <b:property name="databaseName" value="finalproject"/>
-        <b:property name="url" value="jdbc:mysql://localhost:3306/finalproject"/>
+        <b:property name="databaseName" value="apwj"/>
+        <b:property name="url" value="jdbc:mysql://localhost:3306/apwj"/>
         <b:property name="user" value="root"/>
         <b:property name="password" value="root"/>
     </b:bean>

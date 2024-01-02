@@ -18,7 +18,7 @@ public class UserDetailRepository {
         this.sessionFactory = sessionFactory;
     }
 
-    public void createCustomerDetail(UserDetail userDetail) {
+    public void createDetailDetail(UserDetail userDetail) {
         Session session = sessionFactory.getCurrentSession();
         session.save(userDetail);
     }
@@ -33,10 +33,12 @@ public class UserDetailRepository {
         return session.get(UserDetail.class, id);
     }
 
-    public void updateCustomerDetail(UserDetail userDetail) {
+    public void updateCustomerDetail(int id, UserDetail userDetail) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(userDetail);
+        UserDetail existingUserDetail = session.get(UserDetail.class, id);
+        session.update(existingUserDetail);
     }
+
 
     public void deleteById(int id) {
         Session session = sessionFactory.getCurrentSession();

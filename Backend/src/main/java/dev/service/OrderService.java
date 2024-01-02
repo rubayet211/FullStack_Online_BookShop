@@ -24,9 +24,7 @@ public class OrderService {
     }
 
     public void updateOrder(int id, Order updatedOrder) {
-        // Perform validation or additional logic if needed
-        updatedOrder.setId(id);
-        orderRepository.save(updatedOrder);
+        orderRepository.updateById(id, updatedOrder);
     }
 
     public List<Order> getAllOrders() {

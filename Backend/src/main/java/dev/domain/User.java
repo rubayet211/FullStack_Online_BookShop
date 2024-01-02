@@ -1,12 +1,18 @@
 package dev.domain;
-import javax.persistence.CascadeType;
+
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -14,42 +20,18 @@ public class User {
     @Column(name = "id")
     private int id;
 
-
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
-    @Column(name = "email", unique = true)
+    @NotNull
+    @Pattern(regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$", message = "Incorrect email format")
+    @Column(name = "email")
     private String email;
 
-    @NotBlank(message = "Password is required")
+    @NotNull
+    @Size(min = 3)
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Order> orders;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserDetail userDetail;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles;
-
-
-    public User() {
-    }
-
-    public User(int id, String email, String password, List<Order> orders, UserDetail userDetail, List<Role> roles) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.orders = orders;
-        this.userDetail = userDetail;
-        this.roles = roles;
-    }
 
     public int getId() {
         return id;
@@ -58,6 +40,7 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
 
     public String getEmail() {
         return email;
@@ -75,39 +58,13 @@ public class User {
         this.password = password;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
-    public UserDetail getCustomerDetail() {
-        return userDetail;
-    }
-
-    public void setCustomerDetail(UserDetail userDetail) {
-        this.userDetail = userDetail;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", orders=" + orders +
                 ", userDetail=" + userDetail +
-                ", roles=" + roles +
                 '}';
     }
 }

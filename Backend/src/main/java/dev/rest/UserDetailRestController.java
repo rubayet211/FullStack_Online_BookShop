@@ -1,15 +1,18 @@
 package dev.rest;
 
+import dev.domain.User;
 import dev.domain.UserDetail;
+import dev.repository.UserDetailRepository;
 import dev.service.UserDetailService;
+import dev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/user-details")
 public class UserDetailRestController {
 
     private final UserDetailService userDetailService;
@@ -19,37 +22,31 @@ public class UserDetailRestController {
         this.userDetailService = userDetailService;
     }
 
-    @GetMapping
-    public List<UserDetail> getAllCustomerDetails() throws SQLException {
+    @GetMapping("/users-detail")
+    public List<UserDetail> getUsers() throws SQLException {
         return userDetailService.getAllCustomerDetails();
     }
 
-    @GetMapping("/{id}")
-    public UserDetail getCustomerDetailById(@PathVariable int id) throws SQLException {
+    @GetMapping("/users-detail/{id}")
+    public UserDetail getUser(@PathVariable("id") int id) throws SQLException {
         return userDetailService.getCustomerDetailById(id);
     }
 
-    @PostMapping
-    public String createCustomerDetail(@RequestBody UserDetail userDetail) throws SQLException {
-        userDetailService.createCustomerDetail(userDetail);
+    @DeleteMapping("/users-detail/{id}")
+    public String deleteUser(@PathVariable("id") int id) throws SQLException {
+        userDetailService.deleteCustomerDetailById(id);
         return "Successful";
     }
 
-    @PutMapping("/{id}")
-    public String updateCustomerDetail(@PathVariable int id, @RequestBody UserDetail userDetail) throws SQLException {
-        UserDetail existingDetail = userDetailService.getCustomerDetailById(id);
-        if (existingDetail != null) {
-            userDetail.setId(id);
-            userDetailService.updateCustomerDetail(userDetail);
-            return "Successful";
-        } else {
-            return "Customer detail not found";
-        }
+    @PutMapping("/users-detail/{id}")
+    public String updateUserById(@PathVariable("id") int id, @RequestBody UserDetail userDetail) throws SQLException {
+        userDetailService.updateCustomerDetail(id, userDetail);
+        return "Successful";
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteCustomerDetail(@PathVariable int id) throws SQLException {
-        userDetailService.deleteCustomerDetailById(id);
+    @PostMapping("/users-detail")
+    public String createUser(@RequestBody UserDetail userDetail) throws SQLException {
+        userDetailService.createCustomerDetail(userDetail);
         return "Successful";
     }
 }

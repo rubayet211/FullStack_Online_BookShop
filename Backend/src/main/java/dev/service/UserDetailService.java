@@ -13,16 +13,16 @@ import java.util.List;
 @Transactional
 public class UserDetailService {
 
-    private final UserDetailRepository customerDetailRepository;
+    private final UserDetailRepository userDetailRepository;
 
     @Autowired
-    public UserDetailService(UserDetailRepository customerDetailRepository) {
-        this.customerDetailRepository = customerDetailRepository;
+    public UserDetailService(UserDetailRepository userDetailRepository) {
+        this.userDetailRepository = userDetailRepository;
     }
 
     public void createCustomerDetail(UserDetail userDetail) throws SQLException {
         try {
-            customerDetailRepository.createCustomerDetail(userDetail);
+            userDetailRepository.createDetailDetail(userDetail);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
             throw new SQLException("Error creating user detail", ex);
@@ -31,7 +31,7 @@ public class UserDetailService {
 
     public List<UserDetail> getAllCustomerDetails() throws SQLException {
         try {
-            return customerDetailRepository.findAll();
+            return userDetailRepository.findAll();
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
             throw new SQLException("Error retrieving all user details", ex);
@@ -40,16 +40,16 @@ public class UserDetailService {
 
     public UserDetail getCustomerDetailById(int id) throws SQLException {
         try {
-            return customerDetailRepository.findById(id);
+            return userDetailRepository.findById(id);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error retrieving customer detail by ID", ex);
+            throw new SQLException("Error retrieving user detail by ID", ex);
         }
     }
 
-    public void updateCustomerDetail(UserDetail userDetail) throws SQLException {
+    public void updateCustomerDetail(int id, UserDetail userDetail) throws SQLException {
         try {
-            customerDetailRepository.updateCustomerDetail(userDetail);
+            userDetailRepository.updateCustomerDetail(id, userDetail);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
             throw new SQLException("Error updating user detail", ex);
@@ -58,7 +58,7 @@ public class UserDetailService {
 
     public void deleteCustomerDetailById(int id) throws SQLException {
         try {
-            customerDetailRepository.deleteById(id);
+            userDetailRepository.deleteById(id);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
             throw new SQLException("Error deleting user detail by ID", ex);

@@ -1,7 +1,6 @@
 package dev.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -12,20 +11,27 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank(message = "Role name is required")
-    @Column(name = "name", unique = true)
+    @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_has_roles",
+            joinColumns = {
+                    @JoinColumn(name = "role_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "user_id")
+            }
+    )
     private List<User> users;
 
-    public Role(int id, String name, List<User> users) {
-        this.id = id;
-        this.name = name;
-        this.users = users;
+    public Role() {
     }
 
-    public Role() {
+    public Role(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public int getId() {
@@ -44,11 +50,11 @@ public class Role {
         this.name = name;
     }
 
-    public List<User> getCustomers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setCustomers(List<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 }

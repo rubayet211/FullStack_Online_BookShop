@@ -4,7 +4,6 @@ import dev.domain.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,43 +11,36 @@ import java.util.List;
 @Repository
 public class RoleRepository {
 
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-    @Autowired
     public RoleRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public void createRole(Role role) {
+    public void create(Role role) {
         Session session = sessionFactory.getCurrentSession();
         session.save(role);
     }
 
-    public Role findById(int id) {
+    public void edit(Role role) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Role.class, id);
+        session.update(role);
     }
 
-    public List<Role> findAll() {
+    public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Role", Role.class).list();
-    }
-
-    public void deleteById(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        Role role = findById(id);
+        Role role = get(id);
         session.delete(role);
     }
 
-    public void updateById(int id, Role updatedRole) {
+    public List<Role> getAll() {
         Session session = sessionFactory.getCurrentSession();
-        Role existingRole = session.get(Role.class, id);
+        Query<Role> userQuery = session.createQuery("from Role", Role.class);
+        return userQuery.getResultList();
+    }
 
-        if (existingRole != null) {
-            existingRole.setName(updatedRole.getName());
-            // Update other fields as needed
-
-            session.update(existingRole);
-        }
+    public Role get(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Role.class, id);
     }
 }

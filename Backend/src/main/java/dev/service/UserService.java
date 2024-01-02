@@ -2,77 +2,52 @@ package dev.service;
 
 import dev.domain.User;
 import dev.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
 public class UserService {
 
-    private final UserRepository customerRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public void createCustomer(User user) throws SQLException {
-        try {
-            customerRepository.createCustomer(user);
-        } catch (Exception ex) {
-            // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error creating user", ex);
+    public void create(User user) {
+        userRepository.create(user);
+    }
+
+    public void update(int id, User updatedUser) {
+        userRepository.edit(id, updatedUser);
+    }
+
+    public List<User> getAll() {
+        return userRepository.getAll();
+    }
+
+    public User get(int id) {
+        return userRepository.get(id);
+    }
+    public User getByEmail(String email) {
+        return userRepository.getByEmail(email);
+    }
+
+    public User signIn(User user) {
+        User userFound = getByEmail(user.getEmail());
+
+        if (userFound != null && Objects.equals(user.getPassword(), userFound.getPassword())) {
+            return userFound;
+        } else {
+            return null;
         }
     }
 
-    public void updateCustomer(int id, User updatedUser) throws SQLException {
-        try {
-            // Perform validation or additional logic if needed
-            customerRepository.updateCustomer(id, updatedUser);
-        } catch (Exception ex) {
-            // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error updating user", ex);
-        }
-    }
-
-    public List<User> getAllCustomers() throws SQLException {
-        try {
-            return customerRepository.findAll();
-        } catch (Exception ex) {
-            // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error retrieving all users", ex);
-        }
-    }
-
-    public User getCustomerById(int id) throws SQLException {
-        try {
-            return customerRepository.findById(id);
-        } catch (Exception ex) {
-            // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error retrieving user by ID", ex);
-        }
-    }
-
-    public void deleteCustomer(int id) throws SQLException {
-        try {
-            customerRepository.deleteById(id);
-        } catch (Exception ex) {
-            // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error deleting user", ex);
-        }
-    }
-
-    public boolean signIn(String email, String password) throws SQLException {
-        try {
-            User user = customerRepository.findByEmail(email);
-            return user != null && user.getPassword().equals(password);
-        } catch (Exception ex) {
-            // Log the exception or rethrow a more specific exception
-            throw new SQLException("Error signing in", ex);
-        }
+    public void delete(int id) {
+        userRepository.delete(id);
     }
 }

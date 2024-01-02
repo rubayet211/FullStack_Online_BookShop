@@ -12,34 +12,24 @@ public class Order {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User user;
+    @Column(name = "place")
+    private String place;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "city")
+    private String city;
 
     @ManyToOne
-    @JoinColumn(name = "customer_detail_id")
+    @JoinColumn(name = "user_detail_id")
     private UserDetail userDetail;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "order_books",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
-    private List<Book> books;
+
 
     public Order() {
     }
 
-    public Order(int id, User user, String address, UserDetail userDetail, List<Book> books) {
+    public Order(int id, String city) {
         this.id = id;
-        this.user = user;
-        this.address = address;
-        this.userDetail = userDetail;
-        this.books = books;
+        this.city = city;
     }
 
     public int getId() {
@@ -50,47 +40,20 @@ public class Order {
         this.id = id;
     }
 
-    public User getCustomer() {
-        return user;
-    }
-
-    public void setCustomer(User user) {
-        this.user = user;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public UserDetail getCustomerDetail() {
+    public UserDetail getUserDetail() {
         return userDetail;
     }
 
-    public void setCustomerDetail(UserDetail userDetail) {
+    public void setUserDetail(UserDetail userDetail) {
         this.userDetail = userDetail;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public String getCity() {
+        return city;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", customer=" + user +
-                ", address='" + address + '\'' +
-                ", userDetail=" + userDetail +
-                ", books=" + books +
-                '}';
+    public void setCity(String city) {
+        this.city = city;
     }
 }
 

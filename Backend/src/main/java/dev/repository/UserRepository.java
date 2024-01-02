@@ -4,62 +4,59 @@ import dev.domain.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.*;
 import java.util.List;
+import java.util.Queue;
 
 @Repository
 public class UserRepository {
 
     private final SessionFactory sessionFactory;
 
-    @Autowired
     public UserRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public void createCustomer(User user) {
+    public void create(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.save(user);
     }
 
-    public void updateCustomer(int id, User updatedUser) {
+    public void edit(int id, User updatedUser) {
         Session session = sessionFactory.getCurrentSession();
-        // Retrieve the existing customer
+
         User existingUser = session.get(User.class, id);
+        session.update(existingUser);
+    }
 
-        // Update the existing customer with the new details
-        if (existingUser != null) {
-            existingUser.setEmail(updatedUser.getEmail());
-            existingUser.setPassword(updatedUser.getPassword());
-            // Update other fields as needed
 
-            // Save the updated customer
-            session.update(existingUser);
+    public void delete(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        User user = get(id);
+        if (user != null) {
+            session.delete(user);
         }
     }
 
-    public List<User> findAll() {
+    public List<User> getAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from User", User.class).list();
+        Query<User> userQuery = session.createQuery("from User", User.class);
+        return userQuery.getResultList();
     }
 
-    public User findById(int id) {
+    public User get(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(User.class, id);
     }
 
-    public void deleteById(int id) {
+    public User getByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
-        User user = findById(id);
-        session.delete(user);
-    }
-
-    public User findByEmail(String email) {
-        Session session = sessionFactory.getCurrentSession();
-        Query<User> query = session.createQuery("from User where email = :email", User.class);
+        Query<User> query = session.createQuery("FROM User WHERE email = :email", User.class);
         query.setParameter("email", email);
         return query.uniqueResult();
     }
+
+
 }

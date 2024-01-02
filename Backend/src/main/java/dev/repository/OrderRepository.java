@@ -3,6 +3,7 @@ package dev.repository;
 import dev.domain.Order;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +31,8 @@ public class OrderRepository {
 
     public List<Order> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Order", Order.class).list();
+        Query<Order> orderQuery =session.createQuery("from Order", Order.class);
+        return orderQuery.getResultList();
     }
 
     public void deleteById(int id) {
@@ -41,17 +43,8 @@ public class OrderRepository {
 
     public void updateById(int id, Order updatedOrder) {
         Session session = sessionFactory.getCurrentSession();
-        Order existingOrder = findById(id);
+        Order order = findById(id);
+        session.update(order);
 
-        if (existingOrder != null) {
-            // Update the existing order with the new details
-            existingOrder.setCustomer(updatedOrder.getCustomer());
-            existingOrder.setAddress(updatedOrder.getAddress());
-            existingOrder.setCustomerDetail(updatedOrder.getCustomerDetail());
-            existingOrder.setBooks(updatedOrder.getBooks());
-
-            // Save the updated order
-            session.update(existingOrder);
-        }
     }
 }
