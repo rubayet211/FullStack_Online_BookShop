@@ -30,8 +30,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "userDetail_id")
     private UserDetail userDetail;
+
 
     public int getId() {
         return id;
@@ -40,7 +42,6 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getEmail() {
         return email;

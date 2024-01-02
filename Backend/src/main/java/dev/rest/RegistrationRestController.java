@@ -17,13 +17,12 @@ public class RegistrationRestController {
     }
 
     @PostMapping("/register")
-    public String  registerUser(@RequestBody RegistrationRequest registrationRequest) {
+    public UserDetail  registerUser(@RequestBody RegistrationRequest registrationRequest) {
 
         User user = registrationRequest.getUser();
         UserDetail userDetail = registrationRequest.getUserDetail();
-
-        registrationService.registerUser(user, userDetail);
-
-        return "User registered successfully";
+        System.out.println(user.toString());
+        System.out.println(userDetail.toString());
+        return registrationService.registerUser(user, userDetail);
     }
 }

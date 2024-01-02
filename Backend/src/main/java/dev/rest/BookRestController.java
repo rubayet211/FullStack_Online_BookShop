@@ -1,9 +1,11 @@
 package dev.rest;
 
 import dev.domain.Book;
+import dev.domain.UserDetail;
 import dev.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -24,6 +26,11 @@ public class BookRestController {
     public String createBook(@RequestBody Book book) {
         bookService.create(book);
         return "Successful";
+    }
+
+    @PutMapping("/books/{id}")
+    public Book updateBookById(@PathVariable("id") int id, @RequestBody Book book) throws SQLException {
+        return bookService.updateBookById(id, book);
     }
 
     @GetMapping("/books/{id}")

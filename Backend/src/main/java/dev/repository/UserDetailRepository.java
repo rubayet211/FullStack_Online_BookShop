@@ -1,5 +1,6 @@
 package dev.repository;
 
+import dev.domain.User;
 import dev.domain.UserDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,9 +19,10 @@ public class UserDetailRepository {
         this.sessionFactory = sessionFactory;
     }
 
-    public void createDetailDetail(UserDetail userDetail) {
+    public UserDetail createDetail(UserDetail userDetail) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(userDetail);
+        int id = (int)session.save(userDetail);
+        return session.get(UserDetail.class,id);
     }
 
     public List<UserDetail> findAll() {
@@ -42,7 +44,18 @@ public class UserDetailRepository {
 
     public void deleteById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        UserDetail userDetail = findById(id);
+        UserDetail userDetail = session.get(UserDetail.class, id);
+        if(userDetail != null)
+        {
+            User user = userDetail.getUser();
+
+            if(user != null)
+            {
+                userDetail.setUser(null);
+                session.delete(user);
+            }
+            session.delete(userDetail);
+        }
         session.delete(userDetail);
 
     }

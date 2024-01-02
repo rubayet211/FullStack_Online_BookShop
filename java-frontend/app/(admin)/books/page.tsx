@@ -6,11 +6,16 @@ import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 
 import Image from 'next/image'
 import useSWR, { mutate } from "swr";
 import axios from 'axios';
+import { useRouter } from "next/navigation";
+import { useApp } from "@/app/contexts/ApplicationContext";
 
 const Books = () => {
+  const {bookname, SetBookname, bookprice, SetBookprice, bookcost, SetBookcost, SetBookid} = useApp()
+  const router = useRouter()
     const link = "http://localhost:8081/books";
   const { data, error, isLoading } = useSWR(link, () => fetcher(link));
     console.log(data)
+
 
     if(error) return <div>failed to load</div>
     if(isLoading) return (<MyLoading />)
@@ -24,27 +29,18 @@ const Books = () => {
             mutate(link)
             alert('Book deleted successfully')
             console.log(`Deleted post with ID ${id}`);
+
         })
         .catch(error => {
             console.error(error);
         });
         
-        // fetch(`${link}/${id}`, {
-        //         method: 'DELETE',
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         alert('Book deleted successfully')
-        //         mutate(link)
-        //         console.log('Success:', data);
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error:', error);
-        // });
     }   
+ 
+
   return (
     <div className="p-2">
-        <Button>Add new book</Button>
+        <Button onClick={()=>router.push('/books/add')}>Add new book</Button>
 
     <div className="overflow-x-auto mt-3">
       <Table hoverable>
@@ -79,7 +75,13 @@ const Books = () => {
                 />
             </TableCell>
             <TableCell>
-              <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+              <a className="font-medium text-cyan-600 hover:underline dark:text-cyan-500" onClick={()=>{
+                  SetBookname(book.name)
+                 SetBookcost(book.cost)
+                  SetBookprice(book.price)
+                  SetBookid(book.id)
+                  router.push('/books/add')
+              }}>
                 Edit
               </a>
             </TableCell>

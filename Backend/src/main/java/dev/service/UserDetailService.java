@@ -22,7 +22,7 @@ public class UserDetailService {
 
     public void createCustomerDetail(UserDetail userDetail) throws SQLException {
         try {
-            userDetailRepository.createDetailDetail(userDetail);
+            userDetailRepository.createDetail(userDetail);
         } catch (Exception ex) {
             // Log the exception or rethrow a more specific exception
             throw new SQLException("Error creating user detail", ex);

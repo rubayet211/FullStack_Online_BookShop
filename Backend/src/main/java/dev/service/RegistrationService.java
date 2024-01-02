@@ -24,10 +24,8 @@ public class RegistrationService {
         this.userDetailRepository = userDetailRepository;
     }
 
-    public void registerUser(User user, UserDetail userDetail) {
-
-        userRepository.create(user);
+    public UserDetail registerUser(User user, UserDetail userDetail) {
         userDetail.setUser(user);
-        userDetailRepository.createDetailDetail(userDetail);
+        return userDetailRepository.createDetail(userDetail);
     }
 }

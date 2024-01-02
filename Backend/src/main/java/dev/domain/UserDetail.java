@@ -34,8 +34,7 @@ public class UserDetail {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userDetail", orphanRemoval = true)
     private User user;
 
     @OneToMany(mappedBy = "userDetail", fetch = FetchType.EAGER)
