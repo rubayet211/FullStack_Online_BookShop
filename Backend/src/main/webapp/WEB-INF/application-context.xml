@@ -36,5 +36,24 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean id="corsConfigurationSource" class="org.springframework.web.cors.UrlBasedCorsConfigurationSource">
+        <property name="corsConfigurations">
+            <map>
+                <entry key="/**">
+                    <bean class="org.springframework.web.cors.CorsConfiguration">
+                        <property name="allowedOrigins" value="http://localhost:3000"/>
+                        <property name="allowedMethods" value="GET, POST, PUT, DELETE"/>
+                        <property name="allowCredentials" value="true"/>
+                        <property name="maxAge" value="3600"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.filter.CorsFilter">
+        <constructor-arg ref="corsConfigurationSource"/>
+    </bean>
+
     <!--<bean id="fc" class="dev.controller.UserController"/>-->
 </beans>
