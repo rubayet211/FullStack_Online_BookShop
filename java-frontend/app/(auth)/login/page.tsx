@@ -6,6 +6,8 @@ import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import secureLocalStorage from "react-secure-storage";
+
 
 
 const Login = () => {
@@ -29,12 +31,14 @@ const Login = () => {
       password: password
     })
       .then(function (response) {
-        // axios.get(`http://localhost:8081/user/${response.data.id}`)
-        set('id', response.data.id)
+        secureLocalStorage.setItem('email', email); 
+        secureLocalStorage.setItem('password', password);
+       
         console.log(response)
         router.push('/home')
       })
       .catch(function (error) {
+        alert("Invalid email or password")
         console.log(error);
       });
 
@@ -55,10 +59,7 @@ const Login = () => {
           </div>
           <TextInput value={password} onChange={(e)=>setPassword(e.target.value)} type="password" required />
         </div>
-        <div className="flex items-center gap-2">
-          <Checkbox id="remember" />
-          <Label htmlFor="remember">Remember me</Label>
-        </div>
+        
         <Button onClick={onSubmit} type="submit">Login</Button>
         <Button onClick={()=>router.push('register')} type="submit" color="dark">Register</Button>
     </form>

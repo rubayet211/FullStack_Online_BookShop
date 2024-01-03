@@ -5,15 +5,35 @@ import { useEffect } from 'react';
 import BookCards from '@/app/components/Books/BookCards';
 import { useAuth } from '@/app/contexts/AuthContext';
 import { useCookies } from 'next-client-cookies';
+import secureLocalStorage from 'react-secure-storage';
+import useSWR, { mutate } from 'swr';
+import MyLoading from '@/app/components/MyLoading';
+import axios from 'axios';
+
+const link = "http://localhost:8081/signin";
+const fetcher = (link:string) => axios.post(link).then(res => res.data)
+
 
 export default function Home() {
-    const {get, set, remove} = useCookies()
-    const {isLoggedin, login, SetUsername, username} = useAuth()
+  const email = secureLocalStorage.getItem('email') as string;
+  const password = secureLocalStorage.getItem('password') as string;
+  
+  const { data, error, isLoading } = useSWR(link, () => axios.post(link, {
+    email: email,
+    password: password
+  }).then(res => res.data));
+
+    console.log(data)
+    const {SetUsername,isLoggedin, SetUserId, login,logout} = useAuth()
     
-    if(get('id') !== undefined) 
+    
+    if(data)
     {
-        login();
-        
+        SetUsername(email)
+        login()
+    }else 
+    {
+      logout()
     }
   return (
     <>

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import axios from "axios";
+import { mutate } from "swr";
 
 const Registration = () => {
   const link = "http://localhost:8081/register";
@@ -13,11 +14,13 @@ const Registration = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [dob, setDob] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("Male");
   const [notification, setNotification] = useState(false);
 
   const onSubmit = (e:any)=>{
       e.preventDefault()
+      console.log({name,email,phone,password,dob,gender});
+      
       if(name==""||email==""||phone==""||password==""||dob==""||gender==""){
         alert('Please fill all fields')
         return
@@ -46,6 +49,7 @@ const Registration = () => {
         setDob("")
         setGender("")
         setNotification(true)
+        mutate('http://localhost:8081/customers')
       })
       .catch(function (error) {
         console.log(error);
