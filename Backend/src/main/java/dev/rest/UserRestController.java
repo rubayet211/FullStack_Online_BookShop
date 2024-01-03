@@ -47,8 +47,8 @@ public class UserRestController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<User> signUser(@RequestBody User user) {
+    public User signUser(@RequestBody User user) {
         User signedInUser = userService.signIn(user);
-        return ResponseEntity.ok(signedInUser);
+        return signedInUser;
     }
 }

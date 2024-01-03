@@ -1,6 +1,7 @@
 package dev.domain;
 
-public class RegistrationRequest {
+public class
+RegistrationRequest {
     private User user;
     private UserDetail userDetail;
 

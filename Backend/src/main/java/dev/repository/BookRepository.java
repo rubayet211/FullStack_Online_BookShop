@@ -60,4 +60,11 @@ public class BookRepository {
         }
         return book;
     }
+
+    public int count()
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Long cnt = session.createQuery("select count(*) from Book", Long.class).uniqueResult();
+        return cnt.intValue();
+    }
 }

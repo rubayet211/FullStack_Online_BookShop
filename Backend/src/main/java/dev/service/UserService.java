@@ -43,7 +43,7 @@ public class UserService {
         if (userFound != null && Objects.equals(user.getPassword(), userFound.getPassword())) {
             return userFound;
         } else {
-            return null;
+            throw new RuntimeException("User not found or invalid credentials");
         }
     }
 

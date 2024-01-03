@@ -58,5 +58,13 @@ public class UserRepository {
         return query.uniqueResult();
     }
 
+    public int count()
+    {
+        Session session = sessionFactory.getCurrentSession();
+        Long cnt = session.createQuery("select count(*) from User", Long.class).uniqueResult();
+        return cnt.intValue();
+
+    }
+
 
 }
