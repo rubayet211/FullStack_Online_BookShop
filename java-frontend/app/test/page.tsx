@@ -4,17 +4,15 @@ import { useApp } from "../contexts/ApplicationContext"
 import { use, useEffect } from "react"
 import axios from "axios"
 import { useCookies } from 'next-client-cookies';
+import secureLocalStorage from "react-secure-storage"
 
 
 const Test = () => {
-  const {get, set, remove} = useCookies()
+
   
-  useEffect(()=>{
-    set('shamim', 'new cookie')
-  },[])
   return (
     <>
-    {get('shamim')}
+      <h1>shamim hello</h1>
     </>
   )
 }

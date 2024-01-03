@@ -8,7 +8,7 @@ import useSWR from "swr"
 
 
 const Dashboard = () => {
-  const link = "http://localhost:3333/total";
+  const link = "http://localhost:8081/dashboard";
   const { data, error, isLoading } = useSWR(link, () => fetcher(link));
     console.log(data)
 
@@ -17,12 +17,12 @@ const Dashboard = () => {
     if(!data) return <div>no data</div> 
   return (
     <div className="grid grid-cols-3 gap-8 p-4">
-       <DashboardCards value={data[0].customer} title="Total Customers" />
-       <DashboardCards value={data[0].book} title="Total Books" />
-       <DashboardCards value={data[0].order} title="Total Orders" />
-       <DashboardCards value={data[0].revenue} title="Total Revenue" />
-       <DashboardCards value={data[0].profit} title="Total Profit" />
-       <DashboardCards value={data[0].cost} title="Total Cost" />
+       <DashboardCards value={data.customers} title="Total Customers" />
+       <DashboardCards value={data.books} title="Total Books" />
+       <DashboardCards value={data.orders} title="Total Orders" />
+       <DashboardCards value={data.revenues} title="Total Revenue" />
+       <DashboardCards value={data.profits} title="Total Profit" />
+       <DashboardCards value={data.costs} title="Total Cost" />
     </div>
   )
 }

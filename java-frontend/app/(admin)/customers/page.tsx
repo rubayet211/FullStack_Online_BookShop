@@ -12,7 +12,7 @@ const Customers = () => {
     if(error) return <div>failed to load</div>
     if(isLoading) return (<MyLoading />)
     if(!data) return <div>no data</div> 
-    console.log(data[0].user)
+    // console.log(data[0].user)
   return (
     <div className="p-2">
 

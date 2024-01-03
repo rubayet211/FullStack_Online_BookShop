@@ -29,19 +29,21 @@ const Navbar = () => {
           <Link href='/cart'>
             <FaCartArrowDown className='text-2xl hover:cursor-pointer hover:text-orange-400 mr-3'/>
           </Link>
-          {!isLoggedin ? 
+          {isLoggedin ? 
+          
+            (
+              <>
+                <Username />
+              </>
+            )
+            :
             (
               <>
               <Link href='/login' className="px-2 rounded bg-orange-300 hover:bg-orange-400 hover:cursor-pointer">Login</Link>
               <Link href='/register' className="px-2 rounded bg-orange-300 hover:bg-orange-400 hover:cursor-pointer">Register</Link>
               </>
             )
-            :
-            (
-              <>
-                 <Username />
-              </>
-            )
+            
           }
         </div>
     </nav>
